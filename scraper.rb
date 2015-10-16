@@ -60,7 +60,8 @@ end
 
 
 four_col = {
-  55 => 'https://en.wikipedia.org/wiki/List_of_MPs_elected_in_the_United_Kingdom_general_election,_2010'
+  55 => 'https://en.wikipedia.org/wiki/List_of_MPs_elected_in_the_United_Kingdom_general_election,_2010',
+  56 => 'https://en.wikipedia.org/wiki/List_of_MPs_elected_in_the_United_Kingdom_general_election,_2015',
 }
 
 four_col.each do |term, url|
