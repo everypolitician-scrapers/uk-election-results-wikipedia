@@ -33,7 +33,7 @@ def scrape_term(term, url)
       term: term,
       source: url,
     }
-    ScraperWiki.save_sqlite([:name, :area, :party, :term], data)
+    ScraperWiki.save_sqlite([:name, :constituency, :party, :term], data)
   end
 end
 
