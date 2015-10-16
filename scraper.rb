@@ -18,7 +18,8 @@ def noko_for(url)
   Nokogiri::HTML(open(url).read)
 end
 
-def scrape_term(term, url)
+# 3 (or more) columns: Constituency, MP, Party
+def scrape_three_col(term, url)
   noko = noko_for(url)
   rows = noko.xpath('//table[.//th[contains(.,"Constituency")]]//tr[td[3]]')
   raise "No rows" if rows.count.zero?
@@ -37,11 +38,15 @@ def scrape_term(term, url)
   end
 end
 
-lists = {
+
+three_col = {
+  54 => 'https://en.wikipedia.org/wiki/List_of_MPs_elected_in_the_United_Kingdom_general_election,_2005',
+  53 => 'https://en.wikipedia.org/wiki/List_of_MPs_elected_in_the_United_Kingdom_general_election,_2001',
+  52 => 'https://en.wikipedia.org/wiki/List_of_MPs_elected_in_the_United_Kingdom_general_election,_1997',
   51 => 'https://en.wikipedia.org/wiki/List_of_MPs_elected_in_the_United_Kingdom_general_election,_1992',
   50 => 'https://en.wikipedia.org/wiki/List_of_MPs_elected_in_the_United_Kingdom_general_election,_1987',
 }
 
-lists.each do |term, url|
-  scrape_term(term, url)
+three_col.each do |term, url|
+  scrape_three_col(term, url)
 end
