@@ -33,13 +33,13 @@ def scrape_term(term, url)
       term: term,
       source: url,
     }
-    puts data
-    # ScraperWiki.save_sqlite([:name, :area, :party, :term], data)
+    ScraperWiki.save_sqlite([:name, :area, :party, :term], data)
   end
 end
 
 lists = {
-  51 => 'https://en.wikipedia.org/wiki/List_of_MPs_elected_in_the_United_Kingdom_general_election,_1992'
+  51 => 'https://en.wikipedia.org/wiki/List_of_MPs_elected_in_the_United_Kingdom_general_election,_1992',
+  50 => 'https://en.wikipedia.org/wiki/List_of_MPs_elected_in_the_United_Kingdom_general_election,_1987',
 }
 
 lists.each do |term, url|
