@@ -18,6 +18,26 @@ def noko_for(url)
   Nokogiri::HTML(open(url).read)
 end
 
+# 4 (or more) columns: Constituency, Previous Party, MP (Party)
+def scrape_four_col(term, url)
+  noko = noko_for(url)
+  rows = noko.xpath('//table[.//th[contains(.,"Member returned")]]//tr[td[3]]')
+  raise "No rows" if rows.count.zero?
+  rows.each do |tr|
+    td = tr.css('td')
+    data = { 
+      name: td[4].css('a')[0].text,
+      wikiname: td[4].css('a')[0].attr('title'),
+      party: td[4].css('a')[1].attr('title'),
+      constituency: td[0].xpath('.//a').text,
+      constituency_wikiname: td[0].xpath('.//a[not(@class="new")]/@title').text,
+      term: term,
+      source: url,
+    }
+    ScraperWiki.save_sqlite([:name, :constituency, :party, :term], data) rescue binding.pry
+  end
+end
+
 # 3 (or more) columns: Constituency, MP, Party
 def scrape_three_col(term, url)
   noko = noko_for(url)
@@ -38,6 +58,14 @@ def scrape_three_col(term, url)
   end
 end
 
+
+four_col = {
+  55 => 'https://en.wikipedia.org/wiki/List_of_MPs_elected_in_the_United_Kingdom_general_election,_2010'
+}
+
+four_col.each do |term, url|
+  scrape_four_col(term, url)
+end
 
 three_col = {
   54 => 'https://en.wikipedia.org/wiki/List_of_MPs_elected_in_the_United_Kingdom_general_election,_2005',
